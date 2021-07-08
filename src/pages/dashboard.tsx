@@ -1,5 +1,5 @@
 import React from 'react';
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
 import { Box, Flex, SimpleGrid, Text, theme } from '@chakra-ui/react';
 import { Header } from '../components/Header';
 import { Sidebar } from '../components/Sidebar';
@@ -7,12 +7,14 @@ import { ApexOptions } from 'apexcharts';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false
-})
+});
 
-const series = [{
-  name: 'serie1',
-  data: [30, 31, 120, 40, 10]
-}]
+const series = [
+  {
+    name: 'serie1',
+    data: [30, 31, 120, 40, 10]
+  }
+];
 
 const options: ApexOptions = {
   chart: {
@@ -36,10 +38,10 @@ const options: ApexOptions = {
   xaxis: {
     type: 'datetime',
     axisBorder: {
-      color: theme.colors.gray[600],
+      color: theme.colors.gray[600]
     },
     axisTicks: {
-      color: theme.colors.gray[600],
+      color: theme.colors.gray[600]
     },
     categories: [
       '2021-07-01T00:00:00.000Z',
@@ -58,7 +60,7 @@ const options: ApexOptions = {
       opacityTo: 0.3
     }
   }
-}
+};
 
 export default function Dashboard() {
   return (
@@ -68,25 +70,18 @@ export default function Dashboard() {
         <Sidebar />
 
         <SimpleGrid flex="1" gap="4" minChildWidth="320px" align="flex-start">
-          <Box
-            p="8"
-            bg="gray.800"
-            borderRadius={8}
-            pb="4"
-          >
-            <Text fontSize="lg" mb="4">Inscritos da semana</Text>
+          <Box p={['6', '8']} bg="gray.800" borderRadius={8} pb="4">
+            <Text fontSize="lg" mb="4">
+              Inscritos da semana
+            </Text>
             <Chart type="area" height={160} options={options} series={series} />
           </Box>
-          <Box
-            p="8"
-            bg="gray.800"
-            borderRadius={8}
-            pb="4"
-          >
-            <Text fontSize="lg" mb="4">Taxa de abertura</Text>
+          <Box p={['6', '8']} bg="gray.800" borderRadius={8} pb="4">
+            <Text fontSize="lg" mb="4">
+              Taxa de abertura
+            </Text>
             <Chart type="area" height={160} options={options} series={series} />
           </Box>
-
         </SimpleGrid>
       </Flex>
     </Flex>
