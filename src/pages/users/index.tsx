@@ -24,8 +24,9 @@ import { Pagination } from '../../components/Pagination';
 import { useUsers } from '../../services/hooks/useUsers';
 import NextLink from 'next/link';
 import { useState } from 'react';
-import { queryClient } from "../../services/queryClient";
-import { api } from "../../services/api";
+import { queryClient } from '../../services/queryClient';
+import { api } from '../../services/api';
+// import { GetServerSideProps } from 'next';
 
 export default function UserList() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,13 +38,17 @@ export default function UserList() {
   });
 
   async function handlePrefetchUser(userId: string) {
-    await queryClient.prefetchQuery(['user', userId], async () => {
-      const response = await api.get(`/users/${userId}`)
+    await queryClient.prefetchQuery(
+      ['user', userId],
+      async () => {
+        const response = await api.get(`/users/${userId}`);
 
-      return response.data
-    }, {
-      staleTime: 1000 * 60 * 10
-    })
+        return response.data;
+      },
+      {
+        staleTime: 1000 * 60 * 10
+      }
+    );
   }
 
   return (
@@ -102,7 +107,10 @@ export default function UserList() {
                       </Td>
                       <Td>
                         <Box>
-                          <Link color="purple.400" onMouseEnter={() => handlePrefetchUser(user.id)}>
+                          <Link
+                            color="purple.400"
+                            onMouseEnter={() => handlePrefetchUser(user.id)}
+                          >
                             <Text fontWeight="bold">{user.name}</Text>
                           </Link>
                           <Text fontSize="sm" color="gray.300">
@@ -139,3 +147,14 @@ export default function UserList() {
     </Box>
   );
 }
+
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const { users, totalCount } = await getUsers(1);
+
+//   return {
+//     props: {
+//       users,
+//       totalCount
+//     }
+//   };
+// };
